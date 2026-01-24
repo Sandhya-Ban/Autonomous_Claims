@@ -1,0 +1,20 @@
+Policy Number: POL-12345
+Policyholder Name: John Smith
+Effective Dates: 01/01/2024 to 31/12/2024
+
+Date of Incident: 20/01/2024
+Time of Incident: 10:30 AM
+Location: Hyderabad
+Description: Minor accident occurred.
+
+Claimant: John Smith
+Third Parties: None
+Contact: 9999999999
+
+Asset Type: Car
+Asset ID: TS09AB1234
+Estimated Damage: 20000
+
+Claim Type: vehicle
+Attachments: photos, police report
+Initial Estimate: 18000
