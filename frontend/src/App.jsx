@@ -73,9 +73,7 @@ function TabButton({ active, onClick, children }) {
       onClick={onClick}
       className={classNames(
         "px-3 py-2 text-sm font-semibold rounded-lg",
-        active
-          ? "bg-gray-900 text-white"
-          : "text-gray-700 hover:bg-gray-100"
+        active ? "bg-gray-900 text-white" : "text-gray-700 hover:bg-gray-100"
       )}
     >
       {children}
@@ -92,6 +90,10 @@ export default function App() {
   const [raw, setRaw] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // ✅ BACKEND URL from ENV (Vite)
+  const backendUrl =
+    import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
 
   const extracted = result?.extractedFields || {};
   const missing = result?.missingFields || [];
@@ -165,7 +167,7 @@ export default function App() {
           </div>
 
           <div className="text-xs text-gray-500">
-            API: <span className="font-mono">127.0.0.1:8000</span>
+            API: <span className="font-mono">{backendUrl}</span>
           </div>
         </div>
       </div>
@@ -271,20 +273,24 @@ export default function App() {
 
           <Card>
             <CardHeader
-              left={<SectionTitle title="Quick Checks" subtitle="Routing priority" />}
+              left={
+                <SectionTitle title="Quick Checks" subtitle="Routing priority" />
+              }
             />
             <CardBody>
               <ul className="text-sm text-gray-700 space-y-2 list-disc pl-5">
                 <li>
-                  <span className="font-semibold">Investigation</span> if description contains{" "}
+                  <span className="font-semibold">Investigation</span> if
+                  description contains{" "}
                   <span className="font-mono">fraud / inconsistent / staged</span>
                 </li>
                 <li>
-                  <span className="font-semibold">Specialist</span> if claim type is{" "}
-                  <span className="font-mono">injury</span>
+                  <span className="font-semibold">Specialist</span> if claim type
+                  is <span className="font-mono">injury</span>
                 </li>
                 <li>
-                  <span className="font-semibold">Manual review</span> if mandatory fields are missing
+                  <span className="font-semibold">Manual review</span> if
+                  mandatory fields are missing
                 </li>
                 <li>
                   <span className="font-semibold">Fast-track</span> if damage{" "}
@@ -329,7 +335,8 @@ export default function App() {
             <CardBody>
               {!result ? (
                 <div className="text-sm text-gray-500">
-                  Upload a FNOL document and click <b>Process Claim</b> to see results.
+                  Upload a FNOL document and click <b>Process Claim</b> to see
+                  results.
                 </div>
               ) : tab === "summary" ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -365,7 +372,10 @@ export default function App() {
                     </div>
                     <div className="px-4 py-3">
                       <FieldRow label="Policy Number" value={extracted.policyNumber} />
-                      <FieldRow label="Policyholder Name" value={extracted.policyholderName} />
+                      <FieldRow
+                        label="Policyholder Name"
+                        value={extracted.policyholderName}
+                      />
                       <FieldRow label="Effective Dates" value={extracted.effectiveDates} />
                     </div>
                   </div>
@@ -380,7 +390,10 @@ export default function App() {
                       <FieldRow label="Date" value={extracted.incidentDate} />
                       <FieldRow label="Time" value={extracted.incidentTime} />
                       <FieldRow label="Location" value={extracted.incidentLocation} />
-                      <FieldRow label="Description" value={extracted.incidentDescription} />
+                      <FieldRow
+                        label="Description"
+                        value={extracted.incidentDescription}
+                      />
                     </div>
                   </div>
 
@@ -393,7 +406,10 @@ export default function App() {
                     <div className="px-4 py-3">
                       <FieldRow label="Claimant" value={extracted.claimant} />
                       <FieldRow label="Third Parties" value={extracted.thirdParties} />
-                      <FieldRow label="Contact Details" value={extracted.contactDetails} />
+                      <FieldRow
+                        label="Contact Details"
+                        value={extracted.contactDetails}
+                      />
                     </div>
                   </div>
 
@@ -406,8 +422,14 @@ export default function App() {
                     <div className="px-4 py-3">
                       <FieldRow label="Asset Type" value={extracted.assetType} />
                       <FieldRow label="Asset ID" value={extracted.assetId} />
-                      <FieldRow label="Estimated Damage" value={extracted.estimatedDamage} />
-                      <FieldRow label="Initial Estimate" value={extracted.initialEstimate} />
+                      <FieldRow
+                        label="Estimated Damage"
+                        value={extracted.estimatedDamage}
+                      />
+                      <FieldRow
+                        label="Initial Estimate"
+                        value={extracted.initialEstimate}
+                      />
                       <FieldRow label="Claim Type" value={extracted.claimType} />
                       <FieldRow label="Attachments" value={extracted.attachments} />
                     </div>
@@ -427,7 +449,9 @@ export default function App() {
 
       {/* Footer */}
       <div className="max-w-6xl mx-auto px-5 pb-8 text-xs text-gray-500">
-        Tip: Keep backend running at <span className="font-mono">127.0.0.1:8000</span>. Upload FNOL files from backend/data.
+        Tip: Keep backend running at{" "}
+        <span className="font-mono">{backendUrl}</span>. Upload FNOL files from
+        backend/data.
       </div>
     </div>
   );

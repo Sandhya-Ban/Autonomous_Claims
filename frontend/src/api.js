@@ -1,4 +1,7 @@
-export const API_URL = "http://127.0.0.1:8000/process";
+const BASE_URL =
+  (import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000").replace(/\/$/, "");
+
+export const API_URL = `${BASE_URL}/process`;
 
 export async function processFNOL(file) {
   const formData = new FormData();
