@@ -1,3 +1,4 @@
+// src/App.jsx
 import { useMemo, useRef, useState } from "react";
 import { processFNOL } from "./api";
 
@@ -92,8 +93,8 @@ export default function App() {
   const [error, setError] = useState("");
 
   // ✅ BACKEND URL from ENV (Vite)
-  const backendUrl =
-    import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
+  // IMPORTANT: removed localhost fallback so Netlify never shows 127.0.0.1
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const extracted = result?.extractedFields || {};
   const missing = result?.missingFields || [];
@@ -230,9 +231,7 @@ export default function App() {
                     </div>
 
                     <div className="text-sm text-gray-700">
-                      <span className="font-semibold text-gray-900">
-                        Reason:
-                      </span>{" "}
+                      <span className="font-semibold text-gray-900">Reason:</span>{" "}
                       {result.reasoning}
                     </div>
 
@@ -241,9 +240,7 @@ export default function App() {
                         Missing Fields:
                       </span>{" "}
                       {missing.length === 0 ? (
-                        <span className="text-emerald-700 font-semibold">
-                          None
-                        </span>
+                        <span className="text-emerald-700 font-semibold">None</span>
                       ) : (
                         <span className="text-rose-700 font-semibold">
                           {missing.join(", ")}
@@ -273,9 +270,7 @@ export default function App() {
 
           <Card>
             <CardHeader
-              left={
-                <SectionTitle title="Quick Checks" subtitle="Routing priority" />
-              }
+              left={<SectionTitle title="Quick Checks" subtitle="Routing priority" />}
             />
             <CardBody>
               <ul className="text-sm text-gray-700 space-y-2 list-disc pl-5">
@@ -289,8 +284,8 @@ export default function App() {
                   is <span className="font-mono">injury</span>
                 </li>
                 <li>
-                  <span className="font-semibold">Manual review</span> if
-                  mandatory fields are missing
+                  <span className="font-semibold">Manual review</span> if mandatory
+                  fields are missing
                 </li>
                 <li>
                   <span className="font-semibold">Fast-track</span> if damage{" "}
@@ -371,12 +366,18 @@ export default function App() {
                       </h3>
                     </div>
                     <div className="px-4 py-3">
-                      <FieldRow label="Policy Number" value={extracted.policyNumber} />
+                      <FieldRow
+                        label="Policy Number"
+                        value={extracted.policyNumber}
+                      />
                       <FieldRow
                         label="Policyholder Name"
                         value={extracted.policyholderName}
                       />
-                      <FieldRow label="Effective Dates" value={extracted.effectiveDates} />
+                      <FieldRow
+                        label="Effective Dates"
+                        value={extracted.effectiveDates}
+                      />
                     </div>
                   </div>
 
@@ -389,7 +390,10 @@ export default function App() {
                     <div className="px-4 py-3">
                       <FieldRow label="Date" value={extracted.incidentDate} />
                       <FieldRow label="Time" value={extracted.incidentTime} />
-                      <FieldRow label="Location" value={extracted.incidentLocation} />
+                      <FieldRow
+                        label="Location"
+                        value={extracted.incidentLocation}
+                      />
                       <FieldRow
                         label="Description"
                         value={extracted.incidentDescription}
@@ -405,7 +409,10 @@ export default function App() {
                     </div>
                     <div className="px-4 py-3">
                       <FieldRow label="Claimant" value={extracted.claimant} />
-                      <FieldRow label="Third Parties" value={extracted.thirdParties} />
+                      <FieldRow
+                        label="Third Parties"
+                        value={extracted.thirdParties}
+                      />
                       <FieldRow
                         label="Contact Details"
                         value={extracted.contactDetails}
@@ -431,7 +438,10 @@ export default function App() {
                         value={extracted.initialEstimate}
                       />
                       <FieldRow label="Claim Type" value={extracted.claimType} />
-                      <FieldRow label="Attachments" value={extracted.attachments} />
+                      <FieldRow
+                        label="Attachments"
+                        value={extracted.attachments}
+                      />
                     </div>
                   </div>
                 </div>
@@ -449,9 +459,9 @@ export default function App() {
 
       {/* Footer */}
       <div className="max-w-6xl mx-auto px-5 pb-8 text-xs text-gray-500">
-        Tip: Keep backend running at{" "}
-        <span className="font-mono">{backendUrl}</span>. Upload FNOL files from
-        backend/data.
+        Tip: Backend is configured as{" "}
+        <span className="font-mono">{backendUrl}</span>. (Set{" "}
+        <span className="font-mono">VITE_BACKEND_URL</span> in Netlify / .env)
       </div>
     </div>
   );
